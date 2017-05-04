@@ -25,7 +25,7 @@ connection.connect(function(err) {
 connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
     for (var i = 0; i < res.length; i++) {
-        productIdArr.push(res[i].item_id);
+        productIdArr.push(res[i].item_id); //fill array with list of valid item id's
         console.log("=======================");
         console.log(res[i].product_name);
         console.log("Price: " + res[i].price + " | Product ID: " + res[i].item_id);
@@ -55,7 +55,7 @@ function orderFunc() {
                 if (err) throw err;
                 let subtotal = order.quantity * res[0].price;
                 let currentInventory = res[0].stock_quantity;
-                fulfillFunc(order.quantity,currentInventory,order.id); //update database
+                fulfillFunc(order.quantity, currentInventory, order.id); //update database
                 if (order.quantity <= currentInventory) {
                     console.log("We have received your order. Thank you for using Bamazon");
                     console.log("--------------------");
@@ -76,13 +76,15 @@ function orderFunc() {
 };
 
 //update database inventory
-function fulfillFunc(orderquant,bamazonInv,id) {
+function fulfillFunc(orderquant, bamazonInv, id) {
     let remainingInv = bamazonInv - orderquant;
-    connection.query("UPDATE products SET ? WHERE ?", [{
-        stock_quantity: remainingInv
-    }, {
-        item_id: id
-    }], function(err, res) {
-        if (err) throw err;
-    });
+    if (remainingInv >= 0) {
+        connection.query("UPDATE products SET ? WHERE ?", [{
+            stock_quantity: remainingInv
+        }, {
+            item_id: id
+        }], function(err, res) {
+            if (err) throw err;
+        });
+    }
 };
