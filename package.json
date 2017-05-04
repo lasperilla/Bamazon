@@ -1,0 +1,28 @@
+{
+  "name": "bamazon",
+  "version": "0.0.1",
+  "description": "homework 10",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lasperilla/Bamazon.git"
+  },
+  "keywords": [
+    "bamazon",
+    "mysql",
+    "node"
+  ],
+  "author": "lawrence asperilla",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lasperilla/Bamazon/issues"
+  },
+  "homepage": "https://github.com/lasperilla/Bamazon#readme",
+  "dependencies": {
+    "inquirer": "^3.0.6",
+    "mysql": "^2.13.0"
+  }
+}
