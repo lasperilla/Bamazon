@@ -55,8 +55,8 @@ function orderFunc() {
                 if (err) throw err;
                 let subtotal = order.quantity * res[0].price;
                 let currentInventory = res[0].stock_quantity;
-                fulfillFunc(order.quantity, currentInventory, order.id); //update database
                 if (order.quantity <= currentInventory) {
+                    fulfillFunc(order.quantity, currentInventory, order.id); //update database
                     console.log("We have received your order. Thank you for using Bamazon");
                     console.log("--------------------");
                     console.log("Order Summary:");
@@ -78,13 +78,11 @@ function orderFunc() {
 //update database inventory
 function fulfillFunc(orderquant, bamazonInv, id) {
     let remainingInv = bamazonInv - orderquant;
-    if (remainingInv >= 0) {
-        connection.query("UPDATE products SET ? WHERE ?", [{
-            stock_quantity: remainingInv
-        }, {
-            item_id: id
-        }], function(err, res) {
-            if (err) throw err;
-        });
-    }
+    connection.query("UPDATE products SET ? WHERE ?", [{
+        stock_quantity: remainingInv
+    }, {
+        item_id: id
+    }], function(err, res) {
+        if (err) throw err;
+    });
 };
